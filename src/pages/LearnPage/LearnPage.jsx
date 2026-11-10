@@ -1,7 +1,23 @@
+import { useState } from 'react';
+import { useAiMentor } from '../../hooks/useAiMentor';
 import Button from '../../components/ui/Button';
 import styles from './LearnPage.module.css';
 
 export default function LearnPage() {
+  const [input, setInput] = useState('');
+  const { messages, sendMessage, isThinking } = useAiMentor();
+
+  const handleSend = () => {
+    if (input.trim()) {
+      sendMessage(input);
+      setInput('');
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') handleSend();
+  };
+
   return (
     <div className={styles.workspace}>
       <aside className={styles.sidebar}>
@@ -37,20 +53,35 @@ export default function App() {
       <section className={styles.aiChat}>
         <h4>AI Mentor Chat</h4>
         <div className={styles.chatBox}>
-          <div className={`${styles.msg} ${styles.ai}`}>
-            Привіт! Я твій AI-ментор. Є запитання по CSS Modules?
-          </div>
-          <div className={`${styles.msg} ${styles.user}`}>
-            Як імпортувати стилі в компонент?
-          </div>
+          {messages.map((msg) => (
+            <div
+              key={msg.id}
+              className={`${styles.msg} ${msg.sender === 'ai' ? styles.ai : styles.user}`}
+            >
+              {msg.text}
+            </div>
+          ))}
+          {isThinking && (
+            <div
+              className={`${styles.msg} ${styles.ai}`}
+              style={{ opacity: 0.7 }}
+            >
+              <i>AI друкує відповідь...</i>
+            </div>
+          )}
         </div>
         <div className={styles.chatInputGroup}>
           <input
             type="text"
             placeholder="Запитати у AI..."
             className={styles.chatInput}
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={handleKeyDown}
           />
-          <Button variant="primary">Надіслати</Button>
+          <Button variant="primary" onClick={handleSend}>
+            Надіслати
+          </Button>
         </div>
       </section>
     </div>

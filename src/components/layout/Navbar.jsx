@@ -1,9 +1,11 @@
 import { NavLink, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../hooks/useAuth';
 import Button from '../ui/Button';
 import styles from './Navbar.module.css';
 
 export default function Navbar() {
   const navigate = useNavigate();
+  const { user, logout } = useAuth();
 
   return (
     <header className={styles.header}>
@@ -30,9 +32,21 @@ export default function Navbar() {
           Навчання з AI
         </NavLink>
       </nav>
-      <Button variant="primary" onClick={() => navigate('/auth')}>
-        Увійти
-      </Button>
+
+      {user ? (
+        <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+          <span style={{ color: 'var(--accent-orange)', fontSize: '14px' }}>
+            👤 {user.name}
+          </span>
+          <Button variant="outline" onClick={logout}>
+            Вийти
+          </Button>
+        </div>
+      ) : (
+        <Button variant="primary" onClick={() => navigate('/auth')}>
+          Увійти
+        </Button>
+      )}
     </header>
   );
 }
