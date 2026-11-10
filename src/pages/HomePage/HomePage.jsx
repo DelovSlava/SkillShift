@@ -1,7 +1,10 @@
+import { useNavigate } from 'react-router-dom';
 import Button from '../../components/ui/Button';
 import styles from './HomePage.module.css';
 
-export default function HomePage({ setActivePage }) {
+export default function HomePage() {
+  const navigate = useNavigate();
+
   return (
     <div className={styles.container}>
       <section className={styles.hero}>
@@ -10,10 +13,10 @@ export default function HomePage({ setActivePage }) {
         </h1>
         <p>Практичні IT-курси, інтерактивний редактор коду та 24/7 AI-ментор</p>
         <div className={styles.heroButtons}>
-          <Button variant="primary" onClick={() => setActivePage('courses')}>
+          <Button variant="primary" onClick={() => navigate('/courses')}>
             Обрати курс
           </Button>
-          <Button variant="outline" onClick={() => setActivePage('learn')}>
+          <Button variant="outline" onClick={() => navigate('/learn')}>
             Спробувати AI-ментора
           </Button>
         </div>

@@ -1,33 +1,36 @@
+import { NavLink, useNavigate } from 'react-router-dom';
 import Button from '../ui/Button';
 import styles from './Navbar.module.css';
 
-export default function Navbar({ activePage, setActivePage }) {
+export default function Navbar() {
+  const navigate = useNavigate();
+
   return (
     <header className={styles.header}>
-      <div className={styles.logo} onClick={() => setActivePage('home')}>
+      <div className={styles.logo} onClick={() => navigate('/')}>
         Skill<span>Shift</span>
       </div>
       <nav className={styles.nav}>
-        <button
-          className={activePage === 'home' ? styles.active : ''}
-          onClick={() => setActivePage('home')}
+        <NavLink
+          to="/"
+          className={({ isActive }) => (isActive ? styles.active : '')}
         >
           Головна
-        </button>
-        <button
-          className={activePage === 'courses' ? styles.active : ''}
-          onClick={() => setActivePage('courses')}
+        </NavLink>
+        <NavLink
+          to="/courses"
+          className={({ isActive }) => (isActive ? styles.active : '')}
         >
           Курси
-        </button>
-        <button
-          className={activePage === 'learn' ? styles.active : ''}
-          onClick={() => setActivePage('learn')}
+        </NavLink>
+        <NavLink
+          to="/learn"
+          className={({ isActive }) => (isActive ? styles.active : '')}
         >
           Навчання з AI
-        </button>
+        </NavLink>
       </nav>
-      <Button variant="primary" onClick={() => setActivePage('auth')}>
+      <Button variant="primary" onClick={() => navigate('/auth')}>
         Увійти
       </Button>
     </header>
