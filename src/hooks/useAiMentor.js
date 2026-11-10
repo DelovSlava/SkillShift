@@ -17,16 +17,31 @@ export function useAiMentor() {
     setMessages((prev) => [...prev, userMessage]);
     setIsThinking(true);
 
-    // Імітація обробки запиту сервером AI
-    setTimeout(() => {
+    try {
+      // Відправляємо запит до Mock API сервісу
+      const response = await fetch(
+        'https://jsonplaceholder.typicode.com/posts',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ prompt: text }),
+        }
+      );
+
+      await response.json();
+
       const aiReply = {
         id: Date.now() + 1,
         sender: 'ai',
-        text: `Чудове запитання стосовно "${text}"! У React це реалізується через стан та користувацькі хуки.`,
+        text: `Отримано відповідь з API на запит "${text}": У React це реалізується через стан та користувацькі хуки.`,
       };
+
       setMessages((prev) => [...prev, aiReply]);
+    } catch (error) {
+      console.error('Помилка API AI-ментора:', error);
+    } finally {
       setIsThinking(false);
-    }, 800);
+    }
   };
 
   return { messages, sendMessage, isThinking };

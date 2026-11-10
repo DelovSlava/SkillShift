@@ -6,35 +6,33 @@ export function useCourses() {
   const [activeFilter, setActiveFilter] = useState('All');
 
   useEffect(() => {
-    // Імітація асинхронного GET-запиту (fetch)
-    const timer = setTimeout(() => {
-      setCourses([
-        {
-          id: 1,
-          title: 'Java OOP & Backend',
-          desc: 'Основи ООП, паттерни та розробка серверів',
-          level: 'Junior',
-          category: 'Backend',
-        },
-        {
-          id: 2,
-          title: 'Frontend React & Vite',
-          desc: 'Сучасна веб-розробка на React, хуки та компоненти',
-          level: 'Junior / Middle',
-          category: 'Frontend',
-        },
-        {
-          id: 3,
-          title: 'Data Structures & Algorithms',
-          desc: 'Структури даних, алгоритми та підготовка до інтервʼю',
-          level: 'All Levels',
-          category: 'CS',
-        },
-      ]);
-      setLoading(false);
-    }, 400);
+    fetch('https://jsonplaceholder.typicode.com/posts?_limit=3')
+      .then((response) => response.json())
+      .then((apiData) => {
+        // отриману відповідь переписуємо
+        const titles = [
+          'Java OOP & Backend',
+          'Frontend React & Vite',
+          'Data Structures & Algorithms',
+        ];
+        const categories = ['Backend', 'Frontend', 'CS'];
+        const levels = ['Junior', 'Junior / Middle', 'All Levels'];
 
-    return () => clearTimeout(timer);
+        const formattedCourses = apiData.map((item, index) => ({
+          id: item.id,
+          title: titles[index] || item.title.slice(0, 20),
+          desc: item.body.slice(0, 60) + '...',
+          level: levels[index] || 'Junior',
+          category: categories[index] || 'Backend',
+        }));
+
+        setCourses(formattedCourses);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error('Помилка завантаження даних з API:', error);
+        setLoading(false);
+      });
   }, []);
 
   const filteredCourses =
