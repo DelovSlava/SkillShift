@@ -1,0 +1,146 @@
+.workspace {
+  display: grid;
+  grid-template-columns: 240px 1fr 320px;
+  height: calc(100vh - 75px);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.sidebar {
+  background: var(--bg-card);
+  border-right: 1px solid var(--border-card);
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.sidebar h4 {
+  margin-bottom: 15px;
+  color: var(--accent-orange);
+}
+
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar li {
+  padding: 10px;
+  border-radius: 6px;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.activeModule {
+  background: rgba(255, 90, 31, 0.15);
+  color: var(--accent-orange) !important;
+}
+
+.editorArea {
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow-y: auto;
+  min-width: 0; /* Запобігає розтягуванню центральної колонки */
+}
+
+.theory h3 {
+  margin-bottom: 10px;
+}
+
+.theory p {
+  color: var(--text-muted);
+}
+
+.codeBox {
+  background: #000;
+  border: 1px solid var(--border-card);
+  border-radius: 8px;
+  overflow: hidden;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.codeHeader {
+  background: rgba(255, 90, 31, 0.1);
+  padding: 8px 15px;
+  font-size: 12px;
+  color: var(--accent-orange);
+}
+
+.code {
+  padding: 15px;
+  font-family: monospace;
+  color: #00ff66;
+  margin: 0;
+  flex-grow: 1;
+  white-space: pre-wrap; /* Змушує довгі рядки коду переноситися на новий рядок */
+  word-break: break-word; /* Розриває занадто довгі слова/конструкції */
+  overflow-x: auto; /* Додає аккуратний скролл, якщо перенос не потрібен */
+}
+
+.aiChat {
+  background: var(--bg-card);
+  border-left: 1px solid var(--border-card);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.aiChat h4 {
+  margin-bottom: 15px;
+}
+
+.chatBox {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+  margin-bottom: 15px;
+}
+
+.msg {
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.ai {
+  background: rgba(255, 90, 31, 0.15);
+  color: var(--text-main);
+  border: 1px solid rgba(255, 90, 31, 0.2);
+}
+
+.user {
+  background: #222;
+  color: var(--text-main);
+  align-self: flex-end;
+}
+
+.chatInputGroup {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+}
+
+.chatInput {
+  flex: 1;
+  min-width: 0;
+  background: #000;
+  border: 1px solid var(--border-card);
+  color: #fff;
+  padding: 10px 12px;
+  border-radius: 6px;
+  outline: none;
+}
+
+.chatInput:focus {
+  border-color: var(--accent-orange);
+}
